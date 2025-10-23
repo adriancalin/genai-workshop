@@ -9,7 +9,7 @@ public interface ICompanyRepository : IRepository<Company>
     /// <summary>
     /// Get a company by ID for updating (with change tracking)
     /// </summary>
-    Task<Company?> GetForUpdateAsync(int id, string userId);
+    Task<Company?> GetForUpdateAsync(Guid id, string userId);
 
     /// <summary>
     /// Create a new company
@@ -24,10 +24,10 @@ public interface ICompanyRepository : IRepository<Company>
     /// <summary>
     /// Delete a company if owned by user
     /// </summary>
-    Task<bool> DeleteCompanyAsync(int id, string userId);
+    Task<bool> DeleteCompanyAsync(Guid id, string userId);
 
     /// <summary>
     /// Validate company ownership (for authorization checks)
     /// </summary>
-    Task<bool> IsOwnedByUserAsync(int id, string userId);
+    Task<bool> IsOwnedByUserAsync(Guid id, string userId);
 }

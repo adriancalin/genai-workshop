@@ -66,7 +66,7 @@ public class CompaniesQuery : ICompaniesQuery
         };
     }
 
-    public async Task<CompanyDto?> GetCompanyByIdAsync(int id, string userId)
+    public async Task<CompanyDto?> GetCompanyByIdAsync(Guid id, string userId)
     {
         return await _context.Companies
             .AsNoTracking()
@@ -83,7 +83,7 @@ public class CompaniesQuery : ICompaniesQuery
             .FirstOrDefaultAsync();
     }
 
-    public async Task<CompanyDetailsDto?> GetCompanyWithDetailsAsync(int id, string userId)
+    public async Task<CompanyDetailsDto?> GetCompanyWithDetailsAsync(Guid id, string userId)
     {
         return await _context.Companies
             .AsNoTracking()
@@ -109,7 +109,7 @@ public class CompaniesQuery : ICompaniesQuery
             .FirstOrDefaultAsync();
     }
 
-    public async Task<bool> ExistsAsync(int id, string userId)
+    public async Task<bool> ExistsAsync(Guid id, string userId)
     {
         return await _context.Companies
             .AsNoTracking()

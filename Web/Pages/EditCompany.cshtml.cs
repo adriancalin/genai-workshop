@@ -32,7 +32,7 @@ public class EditCompanyModel : PageModel
     public CompanyInput Input { get; set; } = default!;
 
     [BindProperty(SupportsGet = true)]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public class CompanyInput
     {

@@ -6,10 +6,10 @@ namespace Authentication;
 public class Address
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     // Foreign key to Company (optional)
-    public int? CompanyId { get; set; }
+    public Guid? CompanyId { get; set; }
 
     [ForeignKey(nameof(CompanyId))]
     public Company? Company { get; set; }

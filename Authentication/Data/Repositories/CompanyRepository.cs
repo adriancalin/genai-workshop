@@ -14,7 +14,7 @@ public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
     }
 
-    public async Task<Company?> GetForUpdateAsync(int id, string userId)
+    public async Task<Company?> GetForUpdateAsync(Guid id, string userId)
     {
         return await _dbSet
             .Include(c => c.Address)
@@ -33,7 +33,7 @@ public class CompanyRepository : Repository<Company>, ICompanyRepository
         await Task.CompletedTask;
     }
 
-    public async Task<bool> DeleteCompanyAsync(int id, string userId)
+    public async Task<bool> DeleteCompanyAsync(Guid id, string userId)
     {
         var company = await _dbSet
             .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId && !c.Deleted);
@@ -47,7 +47,7 @@ public class CompanyRepository : Repository<Company>, ICompanyRepository
         return true;
     }
 
-    public async Task<bool> IsOwnedByUserAsync(int id, string userId)
+    public async Task<bool> IsOwnedByUserAsync(Guid id, string userId)
     {
         return await _dbSet.AnyAsync(c => c.Id == id && c.UserId == userId && !c.Deleted);
     }
