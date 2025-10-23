@@ -1,3 +1,84 @@
+/* Theme Variables */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-light: #ffffff;
+  --border-color: #dee2e6;
+  --link-color: #0d6efd;
+  --link-hover: #0a58ca;
+  --card-bg: #ffffff;
+  --card-header-bg: #f8f9fa;
+  --navbar-bg: #343a40;
+  --navbar-text: #ffffff;
+  --btn-primary-bg: #0d6efd;
+  --btn-primary-hover: #0b5ed7;
+  --btn-secondary-bg: #6c757d;
+  --btn-secondary-hover: #5c636a;
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --input-focus-border: #86b7fe;
+  --alert-info-bg: #cfe2ff;
+  --alert-info-border: #b6d4fe;
+  --alert-info-text: #084298;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --text-light: #ffffff;
+  --border-color: #495057;
+  --link-color: #6ea8fe;
+  --link-hover: #8bb9fe;
+  --card-bg: #1e1e1e;
+  --card-header-bg: #2d2d2d;
+  --navbar-bg: #0d0d0d;
+  --navbar-text: #f8f9fa;
+  --btn-primary-bg: #0d6efd;
+  --btn-primary-hover: #0b5ed7;
+  --btn-secondary-bg: #495057;
+  --btn-secondary-hover: #3d4349;
+  --input-bg: #2d2d2d;
+  --input-border: #495057;
+  --input-focus-border: #6ea8fe;
+  --alert-info-bg: #052c65;
+  --alert-info-border: #084298;
+  --alert-info-text: #6ea8fe;
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+  --bg-primary: #000000;
+  --bg-secondary: #000000;
+  --bg-tertiary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-light: #000000;
+  --border-color: #ffffff;
+  --link-color: #ffff00;
+  --link-hover: #ffff66;
+  --card-bg: #000000;
+  --card-header-bg: #1a1a1a;
+  --navbar-bg: #000000;
+  --navbar-text: #ffffff;
+  --btn-primary-bg: #ffff00;
+  --btn-primary-hover: #ffff66;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-hover: #cccccc;
+  --input-bg: #000000;
+  --input-border: #ffffff;
+  --input-focus-border: #ffff00;
+  --alert-info-bg: #000000;
+  --alert-info-border: #ffffff;
+  --alert-info-text: #ffff00;
+}
+
 html {
   font-size: 14px;
 }
@@ -9,7 +90,7 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem var(--text-light), 0 0 0 0.25rem var(--input-focus-border);
 }
 
 html {
@@ -19,12 +100,13 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-color: #121212;
-  color: #f8f9fa;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
+  color: var(--text-secondary);
   text-align: end;
 }
 
@@ -33,10 +115,153 @@ body {
 }
 
 a, .nav-link {
-  color: #f8f9fa;
+  color: var(--link-color);
 }
 
 a:hover, .nav-link:hover {
-  color: #ffffff;
+  color: var(--link-hover);
 }
 
+/* Theme-specific component styles */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: var(--navbar-text) !important;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.card-header {
+  background-color: var(--card-header-bg);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.card-footer {
+  background-color: var(--card-header-bg);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.form-control,
+.form-select {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--input-bg);
+  border-color: var(--input-focus-border);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-bg);
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-secondary-hover);
+  border-color: var(--btn-secondary-hover);
+}
+
+.alert-info {
+  background-color: var(--alert-info-bg);
+  border-color: var(--alert-info-border);
+  color: var(--alert-info-text);
+}
+
+.footer {
+  background-color: var(--navbar-bg);
+  border-top: 1px solid var(--border-color);
+  color: var(--navbar-text);
+}
+
+.footer a {
+  color: var(--navbar-text);
+}
+
+/* Theme Selector Styles */
+.theme-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-selector .btn-group {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.theme-btn.active {
+  background-color: var(--btn-primary-bg);
+  color: white;
+  border-color: var(--btn-primary-bg);
+}
+
+.theme-icon {
+  margin-right: 0.25rem;
+}
+
+/* High Contrast specific adjustments */
+[data-theme="high-contrast"] .btn-primary {
+  color: #000000;
+  font-weight: bold;
+}
+
+[data-theme="high-contrast"] .btn-secondary {
+  color: #000000;
+  font-weight: bold;
+}
+
+[data-theme="high-contrast"] .card {
+  border-width: 2px;
+}
+
+[data-theme="high-contrast"] .form-control,
+[data-theme="high-contrast"] .form-select {
+  border-width: 2px;
+}
+
+[data-theme="high-contrast"] a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+[data-theme="high-contrast"] .badge {
+  border: 2px solid var(--text-primary);
+}
