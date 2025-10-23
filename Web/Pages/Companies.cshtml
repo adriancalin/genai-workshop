@@ -1,0 +1,104 @@
+@page
+@model CompaniesModel
+@{
+    ViewData["Title"] = "Companies";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1>@(User?.Identity?.IsAuthenticated == true ? "My Companies" : "Companies")</h1>
+                <p>@(User?.Identity?.IsAuthenticated == true ? "Manage your companies and their addresses." : "View all companies in the database.")</p>
+            </div>
+            @if (User?.Identity?.IsAuthenticated == true)
+            {
+                <div>
+                    <a asp-page="./CreateCompany" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create New Company
+                    </a>
+                </div>
+            }
+        </div>
+        
+        @if (Model.Companies?.Count > 0)
+        {
+            <div class="row">
+                @foreach (var company in Model.Companies)
+                {
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card bg-secondary text-light h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">@company.Name</h5>
+                            </div>
+                            <div class="card-body">
+                                @if (!string.IsNullOrWhiteSpace(company.Description))
+                                {
+                                    <p class="card-text">@company.Description</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text text-muted">No description available</p>
+                                }
+                                
+                                @if (company.Address != null)
+                                {
+                                    <div class="mt-3">
+                                        <h6 class="text-info">Address:</h6>
+                                        <address class="mb-0">
+                                            @company.Address.Street
+                                            @if (!string.IsNullOrWhiteSpace(company.Address.Suite))
+                                            {
+                                                <br />@company.Address.Suite
+                                            }
+                                            <br />@company.Address.City
+                                            @if (!string.IsNullOrWhiteSpace(company.Address.State))
+                                            {
+                                                <text>, @company.Address.State</text>
+                                            }
+                                            @company.Address.PostalCode
+                                            @if (!string.IsNullOrWhiteSpace(company.Address.Country))
+                                            {
+                                                <br />@company.Address.Country
+                                            }
+                                        </address>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="mt-3">
+                                        <h6 class="text-warning">Address:</h6>
+                                        <p class="text-muted mb-0">No address on file</p>
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">
+                                    Company ID: @company.Id
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No companies found</h4>
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <p>You haven't created any companies yet.</p>
+                    <hr>
+                    <p class="mb-0">Click the "Create New Company" button above to add your first company.</p>
+                }
+                else
+                {
+                    <p>There are currently no companies in the database.</p>
+                    <hr>
+                    <p class="mb-0">Please log in to create and manage companies.</p>
+                }
+            </div>
+        }
+    </div>
+</div>

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Commands;
 
@@ -23,7 +24,7 @@ public class ResetDatabase : Command<ResetDatabase.Settings>
     {
         Console.WriteLine("Resetting the database...");
         DropDatabase();
-        RecreateDatabase();
+        RunMigrations();
         CreateTestUsersAndRoles();
         return 0;
     }
@@ -38,6 +39,13 @@ public class ResetDatabase : Command<ResetDatabase.Settings>
     {
         _dbContext.Database.EnsureCreated();
         Console.WriteLine("Database has been recreated successfully.");
+    }
+
+    private void RunMigrations()
+    {
+        Console.WriteLine("Running migrations...");
+        _dbContext.Database.Migrate();
+        Console.WriteLine("Migrations have been applied successfully.");
     }
 
     private void CreateTestUsersAndRoles()

@@ -20,6 +20,8 @@ services.AddDbContext<ApplicationDbContext>(options =>
 services.AddTransient<ResetDatabase>();
 // Register ListUsers command
 services.AddTransient<ListUsers>();
+// Register SeedData command
+services.AddTransient<SeedData>();
 
 // Build the service provider
 var serviceProvider = services.BuildServiceProvider();
@@ -33,6 +35,7 @@ app.Configure(config =>
 {
     config.AddCommand<ResetDatabase>("resetdb");
     config.AddCommand<ListUsers>("list-users");
+    config.AddCommand<SeedData>("seed-data");
 });
 
 app.Run(args);
