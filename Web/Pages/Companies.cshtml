@@ -41,27 +41,11 @@
                                     <p class="card-text text-muted">No description available</p>
                                 }
                                 
-                                @if (company.Address != null)
+                                @if (company.HasAddress)
                                 {
                                     <div class="mt-3">
                                         <h6 class="text-info">Address:</h6>
-                                        <address class="mb-0">
-                                            @company.Address.Street
-                                            @if (!string.IsNullOrWhiteSpace(company.Address.Suite))
-                                            {
-                                                <br />@company.Address.Suite
-                                            }
-                                            <br />@company.Address.City
-                                            @if (!string.IsNullOrWhiteSpace(company.Address.State))
-                                            {
-                                                <text>, @company.Address.State</text>
-                                            }
-                                            @company.Address.PostalCode
-                                            @if (!string.IsNullOrWhiteSpace(company.Address.Country))
-                                            {
-                                                <br />@company.Address.Country
-                                            }
-                                        </address>
+                                        <p class="mb-0">Address details available</p>
                                     </div>
                                 }
                                 else
@@ -73,9 +57,25 @@
                                 }
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">
-                                    Company ID: @company.Id
-                                </small>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        Company ID: @company.Id
+                                    </small>
+                                    @if (User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <div>
+                                            <a asp-page="./EditCompany" asp-route-id="@company.Id" class="btn btn-sm btn-outline-primary me-2">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <form method="post" asp-page-handler="Delete" asp-route-id="@company.Id" class="d-inline" 
+                                                  onsubmit="return confirm('Are you sure you want to delete @company.Name?');">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

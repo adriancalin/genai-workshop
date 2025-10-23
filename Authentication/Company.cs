@@ -22,4 +22,7 @@ public class Company
 
     // One-to-one (optional) relationship: a Company can have a single Address
     public Address? Address { get; set; }
+
+    // Soft delete flag
+    public bool Deleted { get; set; } = false;
 }

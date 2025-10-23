@@ -1,0 +1,88 @@
+@page
+@model EditCompanyModel
+@{
+    ViewData["Title"] = "Edit Company";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>Edit Company</h1>
+        <p class="text-muted">Update company information</p>
+        
+        <form method="post" class="mt-4">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Company Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Input.Name" class="form-label">Company Name *</label>
+                        <input asp-for="Input.Name" class="form-control" placeholder="Enter company name" />
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Input.Description" class="form-label">Description</label>
+                        <textarea asp-for="Input.Description" class="form-control" rows="3" placeholder="Enter a brief description of the company"></textarea>
+                        <span asp-validation-for="Input.Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Address (Optional)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label asp-for="Input.Street" class="form-label">Street</label>
+                            <input asp-for="Input.Street" class="form-control" placeholder="123 Main Street" />
+                            <span asp-validation-for="Input.Street" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Input.Suite" class="form-label">Suite/Unit</label>
+                            <input asp-for="Input.Suite" class="form-control" placeholder="Suite 100" />
+                            <span asp-validation-for="Input.Suite" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.City" class="form-label">City</label>
+                            <input asp-for="Input.City" class="form-control" placeholder="San Francisco" />
+                            <span asp-validation-for="Input.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Input.State" class="form-label">State/Province</label>
+                            <input asp-for="Input.State" class="form-control" placeholder="CA" />
+                            <span asp-validation-for="Input.State" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Input.PostalCode" class="form-label">Postal Code</label>
+                            <input asp-for="Input.PostalCode" class="form-control" placeholder="94105" />
+                            <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Input.Country" class="form-label">Country</label>
+                        <input asp-for="Input.Country" class="form-control" placeholder="USA" />
+                        <span asp-validation-for="Input.Country" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-page="./Companies" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

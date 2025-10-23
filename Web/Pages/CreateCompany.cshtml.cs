@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Authentication;
+using Authentication.Data.Interfaces;
 using System.Security.Claims;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,12 +11,14 @@ namespace Web.Pages;
 [Authorize]
 public class CreateCompanyModel : PageModel
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ICompanyRepository _companyRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<CreateCompanyModel> _logger;
 
-    public CreateCompanyModel(ApplicationDbContext context, ILogger<CreateCompanyModel> logger)
+    public CreateCompanyModel(ICompanyRepository companyRepository, IUnitOfWork unitOfWork, ILogger<CreateCompanyModel> logger)
     {
-        _context = context;
+        _companyRepository = companyRepository;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
@@ -93,8 +96,8 @@ public class CreateCompanyModel : PageModel
             };
         }
 
-        _context.Companies.Add(company);
-        await _context.SaveChangesAsync();
+        await _companyRepository.CreateCompanyAsync(company);
+        await _unitOfWork.SaveChangesAsync();
 
         _logger.LogInformation("User {UserId} created company {CompanyId}", userId, company.Id);
 
