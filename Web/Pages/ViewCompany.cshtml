@@ -1,0 +1,134 @@
+@page
+@model ViewCompanyModel
+@{
+    ViewData["Title"] = Model.Company.Name;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="./Companies">Companies</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Company.Name</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-building"></i> @Model.Company.Name</h1>
+            <div>
+                <a asp-page="./EditCompany" asp-route-id="@Model.Company.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Edit Company
+                </a>
+                <a asp-page="./ManageAddresses" asp-route-id="@Model.Company.Id" class="btn btn-success">
+                    <i class="bi bi-geo-alt"></i> Manage Addresses
+                </a>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Company Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="row">
+                            <dt class="col-sm-4">Company Name:</dt>
+                            <dd class="col-sm-8">@Model.Company.Name</dd>
+
+                            <dt class="col-sm-4">Description:</dt>
+                            <dd class="col-sm-8">
+                                @if (!string.IsNullOrWhiteSpace(Model.Company.Description))
+                                {
+                                    @Model.Company.Description
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No description provided</span>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="row">
+                            <dt class="col-sm-4">Company ID:</dt>
+                            <dd class="col-sm-8"><code>@Model.Company.Id</code></dd>
+
+                            <dt class="col-sm-4">Owner:</dt>
+                            <dd class="col-sm-8">@(Model.Company.UserName ?? "Unknown")</dd>
+
+                            <dt class="col-sm-4">Total Addresses:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-info">@Model.Company.AddressCount</span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-geo-alt-fill"></i> Addresses (@Model.Company.AddressCount)</h5>
+                <a asp-page="./ManageAddresses" asp-route-id="@Model.Company.Id" class="btn btn-sm btn-light">
+                    <i class="bi bi-plus-circle"></i> Add Address
+                </a>
+            </div>
+            <div class="card-body">
+                @if (Model.Company.Addresses.Any())
+                {
+                    <div class="row">
+                        @foreach (var address in Model.Company.Addresses)
+                        {
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-primary">
+                                            <i class="bi bi-geo-alt"></i> Address #@(Model.Company.Addresses.ToList().IndexOf(address) + 1)
+                                        </h6>
+                                        <address class="mb-0">
+                                            <strong>@address.Street</strong>
+                                            @if (!string.IsNullOrWhiteSpace(address.Suite))
+                                            {
+                                                <br />@address.Suite
+                                            }
+                                            <br />@address.City@(!string.IsNullOrWhiteSpace(address.State) ? $", {address.State}" : "") @address.PostalCode
+                                            @if (!string.IsNullOrWhiteSpace(address.Country))
+                                            {
+                                                <br />@address.Country
+                                            }
+                                        </address>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <small class="text-muted">
+                                            <i class="bi bi-key"></i> ID: <code>@address.Id</code>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> No Addresses</h5>
+                        <p>This company doesn't have any addresses yet.</p>
+                        <hr>
+                        <p class="mb-0">
+                            <a asp-page="./ManageAddresses" asp-route-id="@Model.Company.Id" class="alert-link">
+                                Click here to add an address
+                            </a>
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a asp-page="./Companies" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Companies
+            </a>
+        </div>
+    </div>
+</div>

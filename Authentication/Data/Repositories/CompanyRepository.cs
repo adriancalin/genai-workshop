@@ -17,7 +17,7 @@ public class CompanyRepository : Repository<Company>, ICompanyRepository
     public async Task<Company?> GetForUpdateAsync(Guid id, string userId)
     {
         return await _dbSet
-            .Include(c => c.Address)
+            .Include(c => c.Addresses)
             .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId && !c.Deleted);
     }
 

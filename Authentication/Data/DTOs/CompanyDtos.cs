@@ -5,6 +5,8 @@ namespace Authentication.Data.DTOs;
 /// </summary>
 public class AddressDto
 {
+    public Guid Id { get; set; }
+    public Guid? CompanyId { get; set; }
     public string Street { get; set; } = string.Empty;
     public string? Suite { get; set; }
     public string City { get; set; } = string.Empty;
@@ -53,7 +55,7 @@ public class CompanyDto
     public string? Description { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string? UserName { get; set; }
-    public bool HasAddress { get; set; }
+    public int AddressCount { get; set; }
 }
 
 /// <summary>
@@ -61,7 +63,7 @@ public class CompanyDto
 /// </summary>
 public class CompanyDetailsDto : CompanyDto
 {
-    public AddressDto? Address { get; set; }
+    public IEnumerable<AddressDto> Addresses { get; set; } = new List<AddressDto>();
 }
 
 /// <summary>
@@ -77,4 +79,31 @@ public class PaginatedResult<T>
     public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
+}
+
+/// <summary>
+/// DTO for creating a new address
+/// </summary>
+public class CreateAddressDto
+{
+    public Guid CompanyId { get; set; }
+    public string Street { get; set; } = string.Empty;
+    public string? Suite { get; set; }
+    public string City { get; set; } = string.Empty;
+    public string? State { get; set; }
+    public string PostalCode { get; set; } = string.Empty;
+    public string? Country { get; set; }
+}
+
+/// <summary>
+/// DTO for updating an existing address
+/// </summary>
+public class UpdateAddressDto
+{
+    public string Street { get; set; } = string.Empty;
+    public string? Suite { get; set; }
+    public string City { get; set; } = string.Empty;
+    public string? State { get; set; }
+    public string PostalCode { get; set; } = string.Empty;
+    public string? Country { get; set; }
 }

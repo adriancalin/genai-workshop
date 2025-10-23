@@ -20,8 +20,8 @@ public class Company
     [ForeignKey(nameof(UserId))]
     public ApplicationUser? User { get; set; }
 
-    // One-to-one (optional) relationship: a Company can have a single Address
-    public Address? Address { get; set; }
+    // One-to-many relationship: a Company can have multiple Addresses
+    public ICollection<Address> Addresses { get; set; } = new List<Address>();
 
     // Soft delete flag
     public bool Deleted { get; set; } = false;

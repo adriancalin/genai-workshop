@@ -81,12 +81,12 @@ public class EditCompanyModel : PageModel
         {
             Name = company.Name,
             Description = company.Description,
-            Street = company.Address?.Street,
-            Suite = company.Address?.Suite,
-            City = company.Address?.City,
-            State = company.Address?.State,
-            PostalCode = company.Address?.PostalCode,
-            Country = company.Address?.Country
+            Street = company.Addresses.FirstOrDefault()?.Street,
+            Suite = company.Addresses.FirstOrDefault()?.Suite,
+            City = company.Addresses.FirstOrDefault()?.City,
+            State = company.Addresses.FirstOrDefault()?.State,
+            PostalCode = company.Addresses.FirstOrDefault()?.PostalCode,
+            Country = company.Addresses.FirstOrDefault()?.Country
         };
 
         return Page();
@@ -119,22 +119,27 @@ public class EditCompanyModel : PageModel
             !string.IsNullOrWhiteSpace(Input.City) ||
             !string.IsNullOrWhiteSpace(Input.PostalCode))
         {
-            if (company.Address == null)
+            var firstAddress = company.Addresses.FirstOrDefault();
+            if (firstAddress == null)
             {
-                company.Address = new Address();
+                firstAddress = new Address
+                {
+                    CompanyId = company.Id
+                };
+                company.Addresses.Add(firstAddress);
             }
 
-            company.Address.Street = Input.Street ?? string.Empty;
-            company.Address.Suite = Input.Suite;
-            company.Address.City = Input.City ?? string.Empty;
-            company.Address.State = Input.State;
-            company.Address.PostalCode = Input.PostalCode ?? string.Empty;
-            company.Address.Country = Input.Country;
+            firstAddress.Street = Input.Street ?? string.Empty;
+            firstAddress.Suite = Input.Suite;
+            firstAddress.City = Input.City ?? string.Empty;
+            firstAddress.State = Input.State;
+            firstAddress.PostalCode = Input.PostalCode ?? string.Empty;
+            firstAddress.Country = Input.Country;
         }
-        else if (company.Address != null)
+        else if (company.Addresses.Any())
         {
-            // Remove address if all fields are empty
-            company.Address = null;
+            // Remove all addresses if all fields are empty
+            company.Addresses.Clear();
         }
 
         await _companyRepository.UpdateCompanyAsync(company);

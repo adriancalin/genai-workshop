@@ -43,14 +43,25 @@ public class SeedData : Command<SeedData.Settings>
                 Name = "Tech Solutions Inc.",
                 Description = "Leading provider of innovative technology solutions for modern businesses.",
                 UserId = owner.Id,
-                Address = new Address
+                Addresses = new List<Address>
                 {
-                    Street = "123 Silicon Valley Blvd",
-                    Suite = "Suite 400",
-                    City = "San Francisco",
-                    State = "CA",
-                    PostalCode = "94105",
-                    Country = "USA"
+                    new Address
+                    {
+                        Street = "123 Silicon Valley Blvd",
+                        Suite = "Suite 400",
+                        City = "San Francisco",
+                        State = "CA",
+                        PostalCode = "94105",
+                        Country = "USA"
+                    },
+                    new Address
+                    {
+                        Street = "456 Tech Park Ave",
+                        City = "Palo Alto",
+                        State = "CA",
+                        PostalCode = "94301",
+                        Country = "USA"
+                    }
                 }
             },
             new Company
@@ -58,13 +69,16 @@ public class SeedData : Command<SeedData.Settings>
                 Name = "Green Energy Corp",
                 Description = "Sustainable energy solutions for a cleaner tomorrow.",
                 UserId = owner.Id,
-                Address = new Address
+                Addresses = new List<Address>
                 {
-                    Street = "456 Renewable Way",
-                    City = "Austin",
-                    State = "TX",
-                    PostalCode = "73301",
-                    Country = "USA"
+                    new Address
+                    {
+                        Street = "456 Renewable Way",
+                        City = "Austin",
+                        State = "TX",
+                        PostalCode = "73301",
+                        Country = "USA"
+                    }
                 }
             },
             new Company
@@ -72,14 +86,33 @@ public class SeedData : Command<SeedData.Settings>
                 Name = "Global Manufacturing Ltd",
                 Description = "International manufacturing and supply chain management.",
                 UserId = owner.Id,
-                Address = new Address
+                Addresses = new List<Address>
                 {
-                    Street = "789 Industrial Park Dr",
-                    Suite = "Building B",
-                    City = "Detroit",
-                    State = "MI",
-                    PostalCode = "48201",
-                    Country = "USA"
+                    new Address
+                    {
+                        Street = "789 Industrial Park Dr",
+                        Suite = "Building B",
+                        City = "Detroit",
+                        State = "MI",
+                        PostalCode = "48201",
+                        Country = "USA"
+                    },
+                    new Address
+                    {
+                        Street = "101 Factory Lane",
+                        City = "Chicago",
+                        State = "IL",
+                        PostalCode = "60601",
+                        Country = "USA"
+                    },
+                    new Address
+                    {
+                        Street = "202 Warehouse Blvd",
+                        City = "Milwaukee",
+                        State = "WI",
+                        PostalCode = "53201",
+                        Country = "USA"
+                    }
                 }
             },
             new Company
@@ -87,13 +120,16 @@ public class SeedData : Command<SeedData.Settings>
                 Name = "Creative Designs Studio",
                 Description = "Award-winning graphic design and branding agency.",
                 UserId = owner.Id,
-                Address = new Address
+                Addresses = new List<Address>
                 {
-                    Street = "321 Art District Ave",
-                    City = "Portland",
-                    State = "OR",
-                    PostalCode = "97201",
-                    Country = "USA"
+                    new Address
+                    {
+                        Street = "321 Art District Ave",
+                        City = "Portland",
+                        State = "OR",
+                        PostalCode = "97201",
+                        Country = "USA"
+                    }
                 }
             },
             new Company
@@ -101,14 +137,17 @@ public class SeedData : Command<SeedData.Settings>
                 Name = "Financial Advisors Group",
                 Description = "Comprehensive financial planning and investment services.",
                 UserId = owner.Id,
-                Address = new Address
+                Addresses = new List<Address>
                 {
-                    Street = "654 Wall Street",
-                    Suite = "Floor 25",
-                    City = "New York",
-                    State = "NY",
-                    PostalCode = "10005",
-                    Country = "USA"
+                    new Address
+                    {
+                        Street = "654 Wall Street",
+                        Suite = "Floor 25",
+                        City = "New York",
+                        State = "NY",
+                        PostalCode = "10005",
+                        Country = "USA"
+                    }
                 }
             },
             new Company

@@ -29,7 +29,7 @@ public class CompaniesQuery : ICompaniesQuery
                 Description = c.Description,
                 UserId = c.UserId,
                 UserName = c.User != null ? c.User.UserName : null,
-                HasAddress = c.Address != null
+                AddressCount = c.Addresses.Count
             })
             .ToListAsync();
     }
@@ -53,7 +53,7 @@ public class CompaniesQuery : ICompaniesQuery
                 Description = c.Description,
                 UserId = c.UserId,
                 UserName = c.User != null ? c.User.UserName : null,
-                HasAddress = c.Address != null
+                AddressCount = c.Addresses.Count
             })
             .ToListAsync();
 
@@ -78,7 +78,7 @@ public class CompaniesQuery : ICompaniesQuery
                 Description = c.Description,
                 UserId = c.UserId,
                 UserName = c.User != null ? c.User.UserName : null,
-                HasAddress = c.Address != null
+                AddressCount = c.Addresses.Count
             })
             .FirstOrDefaultAsync();
     }
@@ -95,16 +95,18 @@ public class CompaniesQuery : ICompaniesQuery
                 Description = c.Description,
                 UserId = c.UserId,
                 UserName = c.User != null ? c.User.UserName : null,
-                HasAddress = c.Address != null,
-                Address = c.Address != null ? new AddressDto
+                AddressCount = c.Addresses.Count,
+                Addresses = c.Addresses.Select(a => new AddressDto
                 {
-                    Street = c.Address.Street,
-                    Suite = c.Address.Suite,
-                    City = c.Address.City,
-                    State = c.Address.State,
-                    PostalCode = c.Address.PostalCode,
-                    Country = c.Address.Country
-                } : null
+                    Id = a.Id,
+                    CompanyId = a.CompanyId,
+                    Street = a.Street,
+                    Suite = a.Suite,
+                    City = a.City,
+                    State = a.State,
+                    PostalCode = a.PostalCode,
+                    Country = a.Country
+                }).ToList()
             })
             .FirstOrDefaultAsync();
     }

@@ -85,14 +85,17 @@ public class CreateCompanyModel : PageModel
             !string.IsNullOrWhiteSpace(Input.City) || 
             !string.IsNullOrWhiteSpace(Input.PostalCode))
         {
-            company.Address = new Address
+            company.Addresses = new List<Address>
             {
-                Street = Input.Street ?? string.Empty,
-                Suite = Input.Suite,
-                City = Input.City ?? string.Empty,
-                State = Input.State,
-                PostalCode = Input.PostalCode ?? string.Empty,
-                Country = Input.Country
+                new Address
+                {
+                    Street = Input.Street ?? string.Empty,
+                    Suite = Input.Suite,
+                    City = Input.City ?? string.Empty,
+                    State = Input.State,
+                    PostalCode = Input.PostalCode ?? string.Empty,
+                    Country = Input.Country
+                }
             };
         }
 
