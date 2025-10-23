@@ -22,11 +22,11 @@ public class SeedData : Command<SeedData.Settings>
     {
         Console.WriteLine("Seeding sample companies and addresses...");
         
-        // Get the first user (owner) to assign companies to
-        var owner = _dbContext.Users.FirstOrDefault(u => u.UserName == "owner");
-        if (owner == null)
+        // Get all users
+        var users = _dbContext.Users.ToList();
+        if (users.Count == 0)
         {
-            Console.WriteLine("Error: No 'owner' user found. Please run 'resetdb' first.");
+            Console.WriteLine("Error: No users found. Please run 'resetdb' first.");
             return 1;
         }
         
@@ -35,134 +35,88 @@ public class SeedData : Command<SeedData.Settings>
         _dbContext.Companies.RemoveRange(_dbContext.Companies);
         _dbContext.SaveChanges();
 
-        // Create sample companies with addresses
-        var companies = new List<Company>
+        var allCompanies = new List<Company>();
+        var companyNames = new[]
         {
-            new Company
-            {
-                Name = "Tech Solutions Inc.",
-                Description = "Leading provider of innovative technology solutions for modern businesses.",
-                UserId = owner.Id,
-                Addresses = new List<Address>
-                {
-                    new Address
-                    {
-                        Street = "123 Silicon Valley Blvd",
-                        Suite = "Suite 400",
-                        City = "San Francisco",
-                        State = "CA",
-                        PostalCode = "94105",
-                        Country = "USA"
-                    },
-                    new Address
-                    {
-                        Street = "456 Tech Park Ave",
-                        City = "Palo Alto",
-                        State = "CA",
-                        PostalCode = "94301",
-                        Country = "USA"
-                    }
-                }
-            },
-            new Company
-            {
-                Name = "Green Energy Corp",
-                Description = "Sustainable energy solutions for a cleaner tomorrow.",
-                UserId = owner.Id,
-                Addresses = new List<Address>
-                {
-                    new Address
-                    {
-                        Street = "456 Renewable Way",
-                        City = "Austin",
-                        State = "TX",
-                        PostalCode = "73301",
-                        Country = "USA"
-                    }
-                }
-            },
-            new Company
-            {
-                Name = "Global Manufacturing Ltd",
-                Description = "International manufacturing and supply chain management.",
-                UserId = owner.Id,
-                Addresses = new List<Address>
-                {
-                    new Address
-                    {
-                        Street = "789 Industrial Park Dr",
-                        Suite = "Building B",
-                        City = "Detroit",
-                        State = "MI",
-                        PostalCode = "48201",
-                        Country = "USA"
-                    },
-                    new Address
-                    {
-                        Street = "101 Factory Lane",
-                        City = "Chicago",
-                        State = "IL",
-                        PostalCode = "60601",
-                        Country = "USA"
-                    },
-                    new Address
-                    {
-                        Street = "202 Warehouse Blvd",
-                        City = "Milwaukee",
-                        State = "WI",
-                        PostalCode = "53201",
-                        Country = "USA"
-                    }
-                }
-            },
-            new Company
-            {
-                Name = "Creative Designs Studio",
-                Description = "Award-winning graphic design and branding agency.",
-                UserId = owner.Id,
-                Addresses = new List<Address>
-                {
-                    new Address
-                    {
-                        Street = "321 Art District Ave",
-                        City = "Portland",
-                        State = "OR",
-                        PostalCode = "97201",
-                        Country = "USA"
-                    }
-                }
-            },
-            new Company
-            {
-                Name = "Financial Advisors Group",
-                Description = "Comprehensive financial planning and investment services.",
-                UserId = owner.Id,
-                Addresses = new List<Address>
-                {
-                    new Address
-                    {
-                        Street = "654 Wall Street",
-                        Suite = "Floor 25",
-                        City = "New York",
-                        State = "NY",
-                        PostalCode = "10005",
-                        Country = "USA"
-                    }
-                }
-            },
-            new Company
-            {
-                Name = "Remote Services Co",
-                Description = "Fully remote company providing digital consulting services.",
-                UserId = owner.Id
-                // No address - to demonstrate companies without addresses
-            }
+            "Tech Solutions Inc.", "Green Energy Corp", "Global Manufacturing Ltd", "Creative Designs Studio",
+            "Financial Advisors Group", "Healthcare Innovations", "Retail Dynamics LLC", "Logistics Express",
+            "Digital Marketing Pro", "Cloud Services Global"
         };
 
-        _dbContext.Companies.AddRange(companies);
+        var descriptions = new[]
+        {
+            "Leading provider of innovative technology solutions for modern businesses.",
+            "Sustainable energy solutions for a cleaner tomorrow.",
+            "International manufacturing and supply chain management.",
+            "Award-winning graphic design and branding agency.",
+            "Comprehensive financial planning and investment services.",
+            "Revolutionary healthcare technology and patient care solutions.",
+            "Modern retail management and customer experience solutions.",
+            "Efficient logistics and transportation services worldwide.",
+            "Full-service digital marketing and social media management.",
+            "Enterprise cloud infrastructure and platform services."
+        };
+
+        var streets = new[]
+        {
+            "123 Silicon Valley Blvd", "456 Renewable Way", "789 Industrial Park Dr", "321 Art District Ave",
+            "654 Wall Street", "555 Medical Center Dr", "888 Commerce Blvd", "777 Distribution Way",
+            "999 Digital Plaza", "111 Cloud Tower"
+        };
+
+        var cities = new[]
+        {
+            new { City = "San Francisco", State = "CA", Zip = "94105" },
+            new { City = "Austin", State = "TX", Zip = "73301" },
+            new { City = "Detroit", State = "MI", Zip = "48201" },
+            new { City = "Portland", State = "OR", Zip = "97201" },
+            new { City = "New York", State = "NY", Zip = "10005" },
+            new { City = "Boston", State = "MA", Zip = "02108" },
+            new { City = "Seattle", State = "WA", Zip = "98101" },
+            new { City = "Denver", State = "CO", Zip = "80202" },
+            new { City = "Miami", State = "FL", Zip = "33131" },
+            new { City = "Chicago", State = "IL", Zip = "60601" }
+        };
+
+        // Create 10 companies for each user
+        foreach (var user in users)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var location = cities[i];
+                var company = new Company
+                {
+                    Name = $"{companyNames[i]} - {user.UserName}",
+                    Description = descriptions[i],
+                    UserId = user.Id,
+                    Addresses = new List<Address>()
+                };
+
+                // Add 1-3 addresses per company (vary by index)
+                int addressCount = (i % 3) + 1;
+                for (int a = 0; a < addressCount; a++)
+                {
+                    var addressLocation = cities[(i + a) % cities.Length];
+                    company.Addresses.Add(new Address
+                    {
+                        Street = $"{streets[i]} {(a > 0 ? $"Branch {a}" : "")}".Trim(),
+                        Suite = a == 0 ? $"Suite {(i + 1) * 100}" : null,
+                        City = addressLocation.City,
+                        State = addressLocation.State,
+                        PostalCode = addressLocation.Zip,
+                        Country = "USA"
+                    });
+                }
+
+                allCompanies.Add(company);
+            }
+        }
+
+        _dbContext.Companies.AddRange(allCompanies);
         _dbContext.SaveChanges();
 
-        Console.WriteLine($"Successfully seeded {companies.Count} companies with addresses.");
+        Console.WriteLine($"Successfully seeded {allCompanies.Count} companies with addresses for {users.Count} users.");
+        Console.WriteLine($"Each user has 10 companies with varying numbers of addresses.");
         return 0;
     }
 }
